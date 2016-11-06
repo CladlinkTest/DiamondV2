@@ -8,11 +8,11 @@ import java.awt.event.MouseEvent;
 class ControlClic extends MouseAdapter
 {
     private VueBoard vb;
-    private ModelBoard mb;
+    private Tree mb;
 
     ControlClic()
     {
-        this.mb = new ModelBoard();
+        this.mb = new Tree();
         this.vb = new VueBoard(mb);
         this.vb.setPlateauListener(this);
         this.vb.setVisible(true);

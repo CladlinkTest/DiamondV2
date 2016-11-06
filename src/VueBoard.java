@@ -8,7 +8,7 @@ import java.awt.event.MouseListener;
  */
 class VueBoard extends JFrame
 {
-    private ModelBoard mb;
+    private Tree mb;
     private JLabel[] plateauDeCarte;
     private ImageIcon[] playerYellow;
     private ImageIcon[] playerBlue;
@@ -16,7 +16,7 @@ class VueBoard extends JFrame
     private JLabel carteAJouerYellow;
     private JLabel carteAJouerBlue;
 
-    VueBoard(ModelBoard mb)
+    VueBoard(Tree mb)
     {
         this.mb = mb;
         initAttribut();
@@ -56,8 +56,8 @@ class VueBoard extends JFrame
 
         plateauDeCarte[4].setIcon(playerBlue[1]);
         plateauDeCarte[9].setIcon(playerYellow[5]);
-        carteAJouerYellow = new JLabel(playerYellow[mb.getTurn()]);
-        carteAJouerBlue = new JLabel(playerBlue[mb.getTurn()]);
+        //carteAJouerYellow = new JLabel(playerYellow[mb.getTurn()]);
+        //carteAJouerBlue = new JLabel(playerBlue[mb.getTurn()]);
     }
 
     /**
