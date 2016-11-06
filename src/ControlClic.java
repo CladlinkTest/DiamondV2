@@ -9,10 +9,12 @@ class ControlClic extends MouseAdapter
 {
     private VueBoard vb;
     private Tree mb;
+    private Board board;
 
     ControlClic()
     {
-        this.mb = new Tree();
+        board = new Board();
+        this.mb = new Tree(board);
         this.vb = new VueBoard(mb);
         this.vb.setPlateauListener(this);
         this.vb.setVisible(true);

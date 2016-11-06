@@ -15,10 +15,15 @@ class VueBoard extends JFrame
     private static int TAILLEPLATEAU = 13;
     private JLabel carteAJouerYellow;
     private JLabel carteAJouerBlue;
+    private JLabel background;
+    private int xSize, ySize;
 
     VueBoard(Tree mb)
     {
         this.mb = mb;
+        Toolkit tk = Toolkit.getDefaultToolkit();
+        xSize = (int) tk.getScreenSize().getWidth();
+        ySize = (int) tk.getScreenSize().getHeight();
         initAttribut();
         creerWidget();
         setName("Diamond");
@@ -56,6 +61,8 @@ class VueBoard extends JFrame
 
         plateauDeCarte[4].setIcon(playerBlue[1]);
         plateauDeCarte[9].setIcon(playerYellow[5]);
+        carteAJouerBlue = new JLabel(playerBlue[0]);
+        carteAJouerYellow = new JLabel(playerYellow[0]);
         //carteAJouerYellow = new JLabel(playerYellow[mb.getTurn()]);
         //carteAJouerBlue = new JLabel(playerBlue[mb.getTurn()]);
     }
@@ -68,19 +75,27 @@ class VueBoard extends JFrame
     {
         Border border = BorderFactory.createLineBorder(Color.black);
         JPanel global = new JPanel();
+        global.setOpaque(false);
         JPanel preGlobal = new JPanel();
+        preGlobal.setOpaque(false);
         preGlobal.setLayout(new BoxLayout(preGlobal, BoxLayout.LINE_AXIS));
         JPanel panPlateau = new JPanel();
+        panPlateau.setOpaque(false);
         panPlateau.setLayout(new BoxLayout(panPlateau, BoxLayout.Y_AXIS));
         JPanel ligneUn = new JPanel();
+        ligneUn.setOpaque(false);
         ligneUn.setLayout(new BoxLayout(ligneUn, BoxLayout.LINE_AXIS));
         JPanel ligneDeux = new JPanel();
+        ligneDeux.setOpaque(false);
         ligneDeux.setLayout(new BoxLayout(ligneDeux, BoxLayout.LINE_AXIS));
         JPanel ligneTrois = new JPanel();
+        ligneTrois.setOpaque(false);
         ligneTrois.setLayout(new BoxLayout(ligneTrois, BoxLayout.LINE_AXIS));
         JPanel ligneQuatre = new JPanel();
+        ligneQuatre.setOpaque(false);
         ligneQuatre.setLayout(new BoxLayout(ligneQuatre, BoxLayout.LINE_AXIS));
         JPanel ligneCinq = new JPanel();
+        ligneCinq.setOpaque(false);
         ligneCinq.setLayout(new BoxLayout(ligneCinq, BoxLayout.LINE_AXIS));
         ligneUn.add(plateauDeCarte[0]);
         plateauDeCarte[0].setBorder(border);
@@ -119,7 +134,15 @@ class VueBoard extends JFrame
         panPlateau.add(Box.createHorizontalStrut(200));
         preGlobal.add(carteAJouerBlue);
         global.add(preGlobal);
-        setContentPane(global);
+
+        // Mise en place du fond d'écran
+        setLayout(new BorderLayout());
+        background = new JLabel(new ImageIcon("img/background1.jpg"));
+        background.setSize(xSize, ySize);
+        background.setLayout(new FlowLayout());
+        background.add(global, BorderLayout.CENTER);
+
+        setContentPane(background);
     }
 
     /**
