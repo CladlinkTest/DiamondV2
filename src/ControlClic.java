@@ -1,7 +1,5 @@
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.Calendar;
-import java.util.Random;
 
 /**
  Created by cladlink on 05/11/16.
@@ -9,17 +7,12 @@ import java.util.Random;
 class ControlClic extends MouseAdapter
 {
     private VueBoard vb;
-    private Board board;
-    private Tree tree;
-    private int tour;
-    private static Random loto = new Random(Calendar.getInstance().getTimeInMillis());
+    private Party party;
 
     ControlClic()
     {
-        tour = 0;
-        this.board = new Board();
-        this.tree = new Tree(board);
-        this.vb = new VueBoard(board);
+        this.party = new Party();
+        this.vb = new VueBoard(party);
         this.vb.setPlateauListener(this);
         this.vb.setVisible(true);
     }
@@ -41,23 +34,13 @@ class ControlClic extends MouseAdapter
             - afficher vainqueur
 
          */
-        tour++;
-        if(tour == 1)
-        {
-            for(int i=0; i<13; i++)
-                if(e.getSource().equals(vb.getPlateauDeCarte()[i]))
-                {
-                    if(tour == 1)
-                    {
-                        tree.setFirstBlueChoice(i);
-                        int premierChoix = loto.nextInt(14);
-                        while (premierChoix == i)
-                            premierChoix = loto.nextInt(14);
-                        tree.setFirstRedChoice(premierChoix);
-                        tour++;
-                    }
-                    vb.actualiserVisuelPlateau(board.getBoard());
-                }
-        }
+        for(byte i=0; i<13; i++)
+            if(e.getSource().equals(vb.getPlateauDeCarte()[i]))
+            {
+                party.gestiontour(i);
+                party.addTurn();
+                vb.actualiserVisuelPlateau();
+            }
+
     }
 }

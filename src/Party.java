@@ -1,37 +1,45 @@
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
+import java.util.Calendar;
+import java.util.Random;
 
 /**
- * Created by mlucile on 05/11/16.
+ Created by mlucile on 05/11/16.
  */
-public class Party
+class Party
 {
-    Board board;
-    Tree tree;
+    private static Random loto = new Random(Calendar.getInstance().getTimeInMillis());
+    private Board board;
+    private Tree tree;
+    private byte turn;
 
     Party()
     {
         board = new Board();
         tree = new Tree(board);
+        turn = 0;
     }
 
-    void start()
+    void gestiontour(byte i)
     {
-        board.clearBoard();
-        /* A COMPLETER :
-           - afficher le plateau de jeu
-           - demander son 1er coup au joueur bleu, et mettre à jour l'arbre et le plateau
-           - afficher le plateau de jeu
-           - demander son 1er coup au joueur rouge, et mettre à jour l'arbre et le plateau
-           - calculer l'arbre de tous les coups possibles
-           - tant que partie non finie :
-              - demander son prochain coup au joueur bleu, et mettre à jour l'arbre et le plateau
-              - afficher le plateau de jeu
-              - calculer le meilleur prochain cou du rouge et mettre à jour l'arbre et le plateau
-               - afficher le plateau de jeu
-            - fin tant que
-            - afficher vainqueur
+        int premierChoix = loto.nextInt(14); // cf commentaire d'après
+        int token = turn /2;
+        turn++;
+        tree.setBlueChoice(i, (byte)token);
+        while (premierChoix == i)
+            premierChoix = loto.nextInt(14);
+        tree.setIAChoice(premierChoix, (byte)(token+6)); // pas bon faut un random (tant que l'IA est pas fait mais
+        // random parmi les cases vides.
+    }
 
-         */
+    boolean victoire()
+    {
+        return false;
+    }
+
+    Board getBoard() {
+        return board;
+    }
+
+    void addTurn() {
+        this.turn++;
     }
 }

@@ -8,7 +8,7 @@ import java.awt.event.MouseListener;
  */
 class VueBoard extends JFrame
 {
-    private Board mb;
+    private Party party;
     private JLabel[] plateauDeCarte;
     private ImageIcon[] playerYellow;
     private ImageIcon[] playerBlue;
@@ -18,9 +18,9 @@ class VueBoard extends JFrame
     private JLabel background;
     private int xSize, ySize;
 
-    VueBoard(Board partie)
+    VueBoard(Party partie)
     {
-        this.mb = partie;
+        this.party = partie;
         Toolkit tk = Toolkit.getDefaultToolkit();
         xSize = (int) tk.getScreenSize().getWidth();
         ySize = (int) tk.getScreenSize().getHeight();
@@ -40,7 +40,8 @@ class VueBoard extends JFrame
     private void initAttribut()
     {
         plateauDeCarte = new JLabel[13];
-        for (int i = 0; i < plateauDeCarte.length; i++) plateauDeCarte[i] = new JLabel(new ImageIcon("img/void.png"));
+        for (int i = 0; i < plateauDeCarte.length; i++) plateauDeCarte[i]
+                = new JLabel(new ImageIcon("img/void.png"));
 
         playerBlue = new ImageIcon[6];
         playerBlue[0] = new ImageIcon("img/BlueOne.png");
@@ -63,8 +64,8 @@ class VueBoard extends JFrame
         //plateauDeCarte[9].setIcon(playerYellow[5]);
         carteAJouerBlue = new JLabel(playerBlue[0]);
         carteAJouerYellow = new JLabel(playerYellow[0]);
-        //carteAJouerYellow = new JLabel(playerYellow[mb.getTurn()]);
-        //carteAJouerBlue = new JLabel(playerBlue[mb.getTurn()]);
+        //carteAJouerYellow = new JLabel(playerYellow[party.getTurn()]);
+        //carteAJouerBlue = new JLabel(playerBlue[party.getTurn()]);
     }
 
     /**
@@ -128,11 +129,11 @@ class VueBoard extends JFrame
         panPlateau.add(ligneTrois);
         panPlateau.add(ligneQuatre);
         panPlateau.add(ligneCinq);
-        preGlobal.add(carteAJouerYellow);
+        preGlobal.add(carteAJouerBlue);
         carteAJouerYellow.add(Box.createHorizontalStrut(2000));
         preGlobal.add(panPlateau);
         panPlateau.add(Box.createHorizontalStrut(200));
-        preGlobal.add(carteAJouerBlue);
+        preGlobal.add(carteAJouerYellow);
         global.add(preGlobal);
 
         // Mise en place du fond d'écran
@@ -145,26 +146,26 @@ class VueBoard extends JFrame
         setContentPane(background);
     }
 
-    void actualiserVisuelPlateau(byte[] placesValeur)
+    void actualiserVisuelPlateau()
     {
+
+        byte placesValeur[] = party.getBoard().getBoard();
         for(int i=0; i<placesValeur.length; i++)
         {
             if(placesValeur[i] != Board.VOID_CELL)
             {
-                if(placesValeur[i]<7)
+                if(placesValeur[i]<6)
                 {
-                    plateauDeCarte[i] = new JLabel(playerBlue[placesValeur[i] - 1]);
-                    carteAJouerBlue = new JLabel(playerBlue[placesValeur[i]]);
+                    plateauDeCarte[i].setIcon(playerBlue[placesValeur[i]]);
+                    carteAJouerBlue.setIcon(playerBlue[placesValeur[i] + 1]);
                 }
                 else
                 {
-                    plateauDeCarte[i] = new JLabel(playerYellow[placesValeur[i] - 7]);
-                    carteAJouerYellow = new JLabel(playerYellow[placesValeur[i]-6]);
+                    plateauDeCarte[i].setIcon(playerYellow[placesValeur[i] - 6]);
+                    carteAJouerYellow.setIcon(playerYellow[placesValeur[i] - 5]);
                 }
             }
         }
-        creerWidget();
-        pack();
     }
 
     /**
@@ -177,18 +178,6 @@ class VueBoard extends JFrame
             plateauDeCarte[i].addMouseListener(e);
     }
 
-    JLabel getCarteAJouerBlue() {
-        return carteAJouerBlue;
-    }
-    JLabel getCarteAJouerYellow() {
-        return carteAJouerYellow;
-    }
-    void setCarteAJouerYellow(JLabel carteAJouerYellow) {
-        this.carteAJouerYellow = carteAJouerYellow;
-    }
-    void setCarteAJouerBlue(JLabel carteAJouerBlue) {
-        this.carteAJouerBlue = carteAJouerBlue;
-    }
     JLabel[] getPlateauDeCarte() {
         return plateauDeCarte;
     }

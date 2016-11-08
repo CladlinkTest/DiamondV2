@@ -34,8 +34,8 @@ public class Board
         clearBoard();
         neighbors = new byte[13][6];
         // first, initialize all cells as if they have no neighbors, i.e. -1 value
-        for(int i=0;i<13;i++)
-            for(int j=0;j<6;j++)
+        for(byte i=0;i<13;i++)
+            for(byte j=0;j<6;j++)
                 neighbors[i][j] = NO_NEIGHBOR;
         // define neighbors for cell 0
         neighbors[0][0] = 1;

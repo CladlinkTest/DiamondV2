@@ -31,27 +31,27 @@ class Tree
         nbConfigurations = 0;
     }
 
-    /** setFirstBlueChoice():
+    /** setBlueChoice():
      create the root node of the tree, that represents the first turn of a party, i.e.
      the cell chosen by the blue player to put its pawn #1
      CAUTION: it also sets the pawn in the board
      */
-    void setFirstBlueChoice(int idCell)
+    void setBlueChoice(int idCell, byte nb)
     {
-        root = new Node(idCell,1);
-        board.setPawn(idCell,(byte)1);
+        root = new Node(idCell,nb);
+        board.setPawn(idCell, nb);
     }
 
-    /** setFirstRedChoice():
+    /** setIAChoice():
      create the node that represents the second turn of a party, i.e.
      the cell chosen by the red player to put its pawn #1
 
      CAUTION: it also sets the pawn in the board
      */
-    void setFirstRedChoice(int idCell)
+    void setIAChoice(int idCell, byte nb)
     {
         root.addChild(idCell);
-        board.setPawn(idCell,(byte)7);
+        board.setPawn(idCell, nb);
     }
 
     /** buildTree();

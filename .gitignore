@@ -1,7 +1,7 @@
 # Created by .ignore support plugin (hsz.mobi)
-Supprimerait .gitignore
-Supprimerait .idea/
-Supprimerait DiamondV2.iml
-Supprimerait out/
-Supprimerait img/originaux
-Supprimerait img/xcf
+.gitignore
+.idea/
+DiamondV2.iml
+out/
+img/originaux/
+img/xcf/
