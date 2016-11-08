@@ -151,4 +151,8 @@ public class Board
      put a pawn of the given value at idCell in the board.
      */
     void setPawn(int idCell, byte value) { board[idCell] = value; }
+
+    public byte[] getBoard() {
+        return board;
+    }
 }

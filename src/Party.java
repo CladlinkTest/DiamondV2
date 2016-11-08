@@ -8,18 +8,15 @@ public class Party
 {
     Board board;
     Tree tree;
-    BufferedReader consoleIn;
 
     Party()
     {
-        consoleIn = new BufferedReader(new InputStreamReader(System.in));
         board = new Board();
         tree = new Tree(board);
     }
 
     void start()
     {
-
         board.clearBoard();
         /* A COMPLETER :
            - afficher le plateau de jeu

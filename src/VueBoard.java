@@ -8,7 +8,7 @@ import java.awt.event.MouseListener;
  */
 class VueBoard extends JFrame
 {
-    private Tree mb;
+    private Board mb;
     private JLabel[] plateauDeCarte;
     private ImageIcon[] playerYellow;
     private ImageIcon[] playerBlue;
@@ -18,9 +18,9 @@ class VueBoard extends JFrame
     private JLabel background;
     private int xSize, ySize;
 
-    VueBoard(Tree mb)
+    VueBoard(Board partie)
     {
-        this.mb = mb;
+        this.mb = partie;
         Toolkit tk = Toolkit.getDefaultToolkit();
         xSize = (int) tk.getScreenSize().getWidth();
         ySize = (int) tk.getScreenSize().getHeight();
@@ -59,8 +59,8 @@ class VueBoard extends JFrame
         playerYellow[5] = new ImageIcon("img/YellowSix.png");
 
 
-        plateauDeCarte[4].setIcon(playerBlue[1]);
-        plateauDeCarte[9].setIcon(playerYellow[5]);
+        //plateauDeCarte[4].setIcon(playerBlue[1]);
+        //plateauDeCarte[9].setIcon(playerYellow[5]);
         carteAJouerBlue = new JLabel(playerBlue[0]);
         carteAJouerYellow = new JLabel(playerYellow[0]);
         //carteAJouerYellow = new JLabel(playerYellow[mb.getTurn()]);
@@ -69,7 +69,7 @@ class VueBoard extends JFrame
 
     /**
      * creerWidget
-     *     C'est parti pour la merde...
+     * Met en place et organise les éléments graphiques
      */
     private void creerWidget()
     {
@@ -145,6 +145,28 @@ class VueBoard extends JFrame
         setContentPane(background);
     }
 
+    void actualiserVisuelPlateau(byte[] placesValeur)
+    {
+        for(int i=0; i<placesValeur.length; i++)
+        {
+            if(placesValeur[i] != Board.VOID_CELL)
+            {
+                if(placesValeur[i]<7)
+                {
+                    plateauDeCarte[i] = new JLabel(playerBlue[placesValeur[i] - 1]);
+                    carteAJouerBlue = new JLabel(playerBlue[placesValeur[i]]);
+                }
+                else
+                {
+                    plateauDeCarte[i] = new JLabel(playerYellow[placesValeur[i] - 7]);
+                    carteAJouerYellow = new JLabel(playerYellow[placesValeur[i]-6]);
+                }
+            }
+        }
+        creerWidget();
+        pack();
+    }
+
     /**
      *
      * @param e (écouteur de type MouseListener)
@@ -153,5 +175,21 @@ class VueBoard extends JFrame
     {
         for (int i = 0; i < TAILLEPLATEAU; i++)
             plateauDeCarte[i].addMouseListener(e);
+    }
+
+    JLabel getCarteAJouerBlue() {
+        return carteAJouerBlue;
+    }
+    JLabel getCarteAJouerYellow() {
+        return carteAJouerYellow;
+    }
+    void setCarteAJouerYellow(JLabel carteAJouerYellow) {
+        this.carteAJouerYellow = carteAJouerYellow;
+    }
+    void setCarteAJouerBlue(JLabel carteAJouerBlue) {
+        this.carteAJouerBlue = carteAJouerBlue;
+    }
+    JLabel[] getPlateauDeCarte() {
+        return plateauDeCarte;
     }
 }
