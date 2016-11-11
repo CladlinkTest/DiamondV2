@@ -3,18 +3,6 @@
  */
 class Tree
 {
-    /*private int turn;
-
-    Tree()
-    {
-        this.turn = 0;
-    }
-
-    int getTurn()
-    {
-        return turn;
-    }*/
-
     Node root;
     private Board board;
     int nbConfigurations;

@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Random;
 
@@ -20,16 +21,35 @@ class Party
 
     void gestiontour(byte i)
     {
-        int premierChoix = loto.nextInt(14); // cf commentaire d'après
-        int token = turn /2;
+        int coupChoisi = easyMode();
+        int token = turn / 2;
         turn++;
         tree.setBlueChoice(i, (byte)token);
-        while (premierChoix == i)
-            premierChoix = loto.nextInt(14);
-        tree.setIAChoice(premierChoix, (byte)(token+6)); // pas bon faut un random (tant que l'IA est pas fait mais
-        // random parmi les cases vides.
+        tree.setIAChoice(coupChoisi, (byte)(token+6));
     }
 
+    private int easyMode()
+    {
+        ArrayList<Byte> listeCaseVide = new ArrayList<>();
+        byte[] b = board.getBoard();
+        for (byte j = 0; j < b.length; j++)
+            if (b[j] == Board.VOID_CELL)
+                listeCaseVide.add(j);
+
+        return listeCaseVide.get(loto.nextInt(listeCaseVide.size()));
+    }
+
+    private int mediumMode()
+    {
+
+        return 0;
+    }
+
+    private int hardMode()
+    {
+
+        return 0;
+    }
     boolean victoire()
     {
         return false;
@@ -41,5 +61,9 @@ class Party
 
     void addTurn() {
         this.turn++;
+    }
+
+    public byte getTurn() {
+        return turn;
     }
 }

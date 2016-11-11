@@ -148,24 +148,25 @@ class VueBoard extends JFrame
 
     void actualiserVisuelPlateau()
     {
-
         byte placesValeur[] = party.getBoard().getBoard();
+        byte turn = party.getTurn();
         for(int i=0; i<placesValeur.length; i++)
-        {
-            if(placesValeur[i] != Board.VOID_CELL)
+            if(placesValeur[i] != Board.VOID_CELL
+                    && plateauDeCarte[i].getMouseListeners().length == 1)
             {
-                if(placesValeur[i]<6)
+                if (placesValeur[i] < 6)
                 {
                     plateauDeCarte[i].setIcon(playerBlue[placesValeur[i]]);
-                    carteAJouerBlue.setIcon(playerBlue[placesValeur[i] + 1]);
+                    plateauDeCarte[i].removeMouseListener(plateauDeCarte[i].getMouseListeners()[0]);
                 }
                 else
                 {
                     plateauDeCarte[i].setIcon(playerYellow[placesValeur[i] - 6]);
-                    carteAJouerYellow.setIcon(playerYellow[placesValeur[i] - 5]);
+                    plateauDeCarte[i].removeMouseListener(plateauDeCarte[i].getMouseListeners()[0]);
                 }
             }
-        }
+        carteAJouerYellow.setIcon(playerYellow[turn/2]);
+        carteAJouerBlue.setIcon(playerBlue[turn/2]);
     }
 
     /**
