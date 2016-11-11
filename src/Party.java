@@ -25,10 +25,11 @@ class Party
      */
     void gestiontour(byte i)
     {
-        int coupChoisi = easyMode();
+        int coupChoisi;
         int token = turn / 2;
         turn++;
         tree.setBlueChoice(i, (byte)token);
+        coupChoisi = easyMode();
         tree.setIAChoice(coupChoisi, (byte)(token+6));
     }
 

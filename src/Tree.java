@@ -26,7 +26,7 @@ class Tree
      */
     void setBlueChoice(int idCell, byte nb)
     {
-        root = new Node(idCell,nb);
+        root = new Node(idCell, nb);
         board.setPawn(idCell, nb);
     }
 
