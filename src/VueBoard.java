@@ -18,6 +18,10 @@ class VueBoard extends JFrame
     private JLabel background;
     private int xSize, ySize;
 
+    /**
+     *
+     * @param partie
+     */
     VueBoard(Party partie)
     {
         this.party = partie;
@@ -146,6 +150,9 @@ class VueBoard extends JFrame
         setContentPane(background);
     }
 
+    /**
+     *
+     */
     void actualiserVisuelPlateau()
     {
         byte placesValeur[] = party.getBoard().getBoard();

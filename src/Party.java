@@ -19,6 +19,10 @@ class Party
         turn = 0;
     }
 
+    /**
+     *
+     * @param i
+     */
     void gestiontour(byte i)
     {
         int coupChoisi = easyMode();
@@ -28,6 +32,10 @@ class Party
         tree.setIAChoice(coupChoisi, (byte)(token+6));
     }
 
+    /**
+     *
+     * @return
+     */
     private int easyMode()
     {
         ArrayList<Byte> listeCaseVide = new ArrayList<>();
@@ -39,31 +47,37 @@ class Party
         return listeCaseVide.get(loto.nextInt(listeCaseVide.size()));
     }
 
+    /**
+     *
+     * @return
+     */
     private int mediumMode()
     {
 
         return 0;
     }
 
+    /**
+     *
+     * @return
+     */
     private int hardMode()
     {
 
         return 0;
     }
+
     boolean victoire()
     {
         return false;
     }
-
     Board getBoard() {
         return board;
     }
-
     void addTurn() {
         this.turn++;
     }
-
-    public byte getTurn() {
+    byte getTurn() {
         return turn;
     }
 }

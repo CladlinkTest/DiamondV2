@@ -104,7 +104,7 @@ public class Board
         neighbors[12][1] = 11;
     }
 
-    void clearBoard()
+    private void clearBoard()
     {
         for(int i=0;i<13;i++) board[i] = VOID_CELL;
         blueScore = 0;
