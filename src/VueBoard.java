@@ -172,8 +172,16 @@ class VueBoard extends JFrame
                     plateauDeCarte[i].removeMouseListener(plateauDeCarte[i].getMouseListeners()[0]);
                 }
             }
-        carteAJouerYellow.setIcon(playerYellow[turn/2]);
-        carteAJouerBlue.setIcon(playerBlue[turn/2]);
+        if(turn<11)
+        {
+            carteAJouerYellow.setIcon(playerYellow[turn / 2]);
+            carteAJouerBlue.setIcon(playerBlue[turn / 2]);
+        }
+        else
+        {
+            carteAJouerYellow.setIcon(null);
+            carteAJouerBlue.setIcon(null);
+        }
     }
 
     /**
