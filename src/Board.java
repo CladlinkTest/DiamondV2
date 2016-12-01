@@ -137,7 +137,7 @@ public class Board
         for(int i=0; i<6; i++)
             if (neighbors[idVoid][i] != NO_NEIGHBOR)
             {
-                if (board[neighbors[idVoid][i]] <= 6)
+                if (board[neighbors[idVoid][i]] < 6)
                 {
                     System.out.println("bleu : " + (board[neighbors[idVoid][i]]+1));
                     blueScore += board[neighbors[idVoid][i]]+1;
