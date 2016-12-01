@@ -194,7 +194,16 @@ class VueBoard extends JFrame
             plateauDeCarte[i].addMouseListener(e);
     }
 
+    void jOptionMessage(String message)
+    {
+        JOptionPane.showMessageDialog(this, message, "Victoire !", JOptionPane.INFORMATION_MESSAGE);
+    }
+
     JLabel[] getPlateauDeCarte() {
         return plateauDeCarte;
+    }
+
+    static int getTAILLEPLATEAU() {
+        return TAILLEPLATEAU;
     }
 }

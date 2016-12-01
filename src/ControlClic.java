@@ -26,6 +26,18 @@ class ControlClic extends MouseAdapter
                 party.gestiontour(i);
                 party.addTurn();
                 vb.actualiserVisuelPlateau();
+                if(party.getTurn() == 12)
+                {
+                    for (i = 0; i < VueBoard.getTAILLEPLATEAU(); i++)
+                        vb.getPlateauDeCarte()[i].removeMouseListener(this);
+                    party.getBoard().computeScore();
+                    if(party.getBoard().blueScore > party.getBoard().redScore)
+                        vb.jOptionMessage("Le joueur rouge a gagné !");
+                    else if (party.getBoard().blueScore < party.getBoard().redScore)
+                        vb.jOptionMessage("Le joueur bleu a gagné !");
+                    else
+                        vb.jOptionMessage("Egalité !");
+                }
             }
     }
 }
