@@ -10,7 +10,9 @@ public class Diamond
             @Override
             public void run()
             {
-                ControlClic controler = new ControlClic();
+                Accueil accueil = new Accueil();
+                AccueilController controler = new AccueilController(accueil);
+                accueil.setVisible(true);
             }
         });
     }

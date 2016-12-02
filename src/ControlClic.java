@@ -10,9 +10,9 @@ class ControlClic extends MouseAdapter
     private VueBoard vb;
     private Party party;
 
-    ControlClic()
+    ControlClic(Party party)
     {
-        this.party = new Party();
+        this.party = party;
         this.vb = new VueBoard(party);
         this.vb.setPlateauListener(this);
         this.vb.setVisible(true);

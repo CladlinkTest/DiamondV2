@@ -8,9 +8,9 @@ import java.util.Random;
  */
 class Party
 {
-    private static final byte EASY_MODE = 1;
-    private static final byte MEDIUM_MODE = 2;
-    private static final byte HARD_MODE = 3;
+    static final byte EASY_MODE = 1;
+    static final byte MEDIUM_MODE = 2;
+    static final byte HARD_MODE = 3;
     private byte modeJeu;
     private static Random loto = new Random(Calendar.getInstance().getTimeInMillis());
     private Board board;
