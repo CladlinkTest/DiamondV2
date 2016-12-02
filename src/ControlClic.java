@@ -23,7 +23,10 @@ class ControlClic extends MouseAdapter
         for(byte i=0; i<13; i++)
             if(e.getSource().equals(vb.getPlateauDeCarte()[i]))
             {
-                party.gestiontour(i);
+                if (party.getTurn() == 0)
+                    party.gestionTourUn(i);
+                else
+                    party.gestionTour(i);
                 party.addTurn();
                 vb.actualiserVisuelPlateau();
                 if(party.getTurn() == 12)

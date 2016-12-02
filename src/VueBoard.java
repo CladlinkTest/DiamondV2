@@ -161,14 +161,14 @@ class VueBoard extends JFrame
             if(placesValeur[i] != Board.VOID_CELL
                     && plateauDeCarte[i].getMouseListeners().length == 1)
             {
-                if (placesValeur[i] < 6)
+                if (placesValeur[i] <= 6)
                 {
-                    plateauDeCarte[i].setIcon(playerBlue[placesValeur[i]]);
+                    plateauDeCarte[i].setIcon(playerBlue[placesValeur[i]-1]);
                     plateauDeCarte[i].removeMouseListener(plateauDeCarte[i].getMouseListeners()[0]);
                 }
                 else
                 {
-                    plateauDeCarte[i].setIcon(playerYellow[placesValeur[i] - 6]);
+                    plateauDeCarte[i].setIcon(playerYellow[placesValeur[i] - 7]);
                     plateauDeCarte[i].removeMouseListener(plateauDeCarte[i].getMouseListeners()[0]);
                 }
             }

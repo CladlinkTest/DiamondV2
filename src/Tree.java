@@ -5,7 +5,6 @@ class Tree
 {
     Node root;
     private Board board;
-    int nbConfigurations;
 
     /**
      * Tree
@@ -16,7 +15,6 @@ class Tree
     {
         root = null;
         this.board = board;
-        nbConfigurations = 0;
     }
 
     /** setBlueChoice():
@@ -26,7 +24,6 @@ class Tree
      */
     void setBlueChoice(int idCell, byte nb)
     {
-        root = new Node(idCell, nb);
         board.setPawn(idCell, nb);
     }
 
@@ -38,7 +35,6 @@ class Tree
      */
     void setIAChoice(int idCell, byte nb)
     {
-        root.addChild(idCell);
         board.setPawn(idCell, nb);
     }
 
@@ -48,7 +44,6 @@ class Tree
      */
     void buildTree()
     {
-        nbConfigurations = 0;
         // get the single child of the root, i.e. the node that represents the first pawn played by red player.
         Node n = root.children[0];
         // call the recursive method that build the tree from that node
@@ -61,16 +56,13 @@ class Tree
      */
     private void computePossibilities(Node n)
     {
+        /*for (int i = 0; i < board.board.length; i++) {
+            System.out.print(board.board[i] + " ");
+        }
+        System.out.println();*/
         if (n.turn == 12) // if n represents the last turn of the party, stop the recursion and determine winner
         {
-            board.computeScore();
-            int r = board.redScore;
-            int b = board.blueScore;
-            if (b == r) { n.result = Node.DRAW_PARTY; }
-            else if (b < r) { n.result = Node.BLUE_WINS; } // if blue obtains less than red -> blue wins
-            else { n.result = Node.RED_WINS; } // if red obtains less than blue -> red wins
-            nbConfigurations += 1;
-            if ((nbConfigurations % 1000000) == 0) System.out.print(".");
+            stateLeave(n);
             return;
         }
         // determine value of the next pawn that must be played from n.turn
@@ -86,6 +78,36 @@ class Tree
             }
     }
 
+    void parcoursArbre(Node n)
+    {
+        if (n.turn == 12) // if n represents the last turn of the party, stop the recursion and determine winner
+        {
+            stateLeave(n);
+            return;
+        }
+        // determine value of the next pawn that must be played from n.turn
+        int nextPawnValue = (n.turn+2)/2; // get the "real" value (i.e. from 1 to 6)
+        if ((n.turn+1)%2 == 0) nextPawnValue += 6; // get the value in the board if it is a red one*
+        for(int i=0;i<n.children.length;i++) // check for all remaining void cells and try to place a pawn
+        {
+            board.setPawn(n.children[i].idCell,(byte)nextPawnValue); // place the pawn here
+            Node child = n.children[i]; // create the corresponding node in the tree
+            parcoursArbre(child); // recursive call
+            board.setPawn(n.children[i].idCell,Board.VOID_CELL); // remove pawn so that the cell appears to be free
+        }
+    }
+
+    private void stateLeave(Node n)
+    {
+        board.computeScoreIA();
+        int r = board.redScore;
+        int b = board.blueScore;
+        if (b == r) { n.result = Node.DRAW_PARTY; }
+        else if (b < r) { n.result = Node.BLUE_WINS; } // if blue obtains less than red -> blue wins
+        else { n.result = Node.RED_WINS; } // if red obtains less than blue -> red wins
+    }
+
+
     /** computeBlueVictories()
      determine recursively in how many cases blue wins
      in the tree that begins with n. This can be done
@@ -94,8 +116,10 @@ class Tree
     int computeBlueVictories(Node n)
     {
         int nb = 0;
-        if (n.turn == 12 && n.result == Node.BLUE_WINS) return 1;
-        if (n.result == Node.RED_WINS || n.result == Node.DRAW_PARTY) return 0;
+        if (n.result == Node.BLUE_WINS && n.turn == 12) return 1;
+        for (int i = 0; i < n.nbChildren; i++)
+            nb += computeBlueVictories(n.children[i]);
+
         return nb;
     }
 
@@ -107,8 +131,10 @@ class Tree
     int computeRedVictories(Node n)
     {
         int nb = 0;
-        if (n.turn == 12 && n.result == Node.RED_WINS) return 1;
-        if (n.result == Node.BLUE_WINS || n.result == Node.DRAW_PARTY) return 0;
+        if (n.result == Node.RED_WINS && n.turn == 12)
+            return 1;
+        for (int i = 0; i < n.nbChildren; i++)
+            nb += computeRedVictories(n.children[i]);
         return nb;
     }
 
@@ -120,8 +146,9 @@ class Tree
     int computeDraws(Node n)
     {
         int nb = 0;
-        if (n.turn == 12 && n.result == Node.DRAW_PARTY) return 1;
-        if (n.result == Node.RED_WINS || n.result == Node.BLUE_WINS) return 0;
+        if (n.result == Node.DRAW_PARTY && n.turn == 12) return 1;
+        for (int i = 0; i < n.nbChildren; i++)
+            nb += computeDraws(n.children[i]);
         return nb;
     }
 }

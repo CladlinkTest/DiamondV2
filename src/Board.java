@@ -139,14 +139,29 @@ public class Board
             {
                 if (board[neighbors[idVoid][i]] < 6)
                 {
-                    System.out.println("bleu : " + (board[neighbors[idVoid][i]]+1));
-                    blueScore += board[neighbors[idVoid][i]]+1;
+                    System.out.println("bleu : " + (board[neighbors[idVoid][i]]));
+                    blueScore += board[neighbors[idVoid][i]];
                 }
                 else
                 {
-                    System.out.println("rouge : " + (board[neighbors[idVoid][i]]-5));
-                    redScore += (board[neighbors[idVoid][i]]-5);
+                    System.out.println("rouge : " + (board[neighbors[idVoid][i]]-6));
+                    redScore += (board[neighbors[idVoid][i]]-6);
                 }
+            }
+    }
+
+    void computeScoreIA()
+    {
+        blueScore = 0;
+        redScore = 0;
+        int idVoid = voidCellIndex();
+        for(int i=0;i<6;i++)
+            if (neighbors[idVoid][i] != NO_NEIGHBOR)
+            {
+                if (board[neighbors[idVoid][i]] <= 6)
+                    blueScore += board[neighbors[idVoid][i]];
+                else
+                    redScore += (board[neighbors[idVoid][i]]-6);
             }
     }
 
@@ -154,8 +169,7 @@ public class Board
      put a pawn of the given value at idCell in the board.
      */
     void setPawn(int idCell, byte value) { board[idCell] = value; }
-
-    public byte[] getBoard() {
+    byte[] getBoard() {
         return board;
     }
 
