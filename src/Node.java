@@ -34,7 +34,7 @@
           - 1 : blue wins
           - 2 : red wins
      */
-public class Node
+class Node
 {
     static byte NO_RESULT = -1;
     static byte DRAW_PARTY = 0;
@@ -79,6 +79,4 @@ public class Node
         nbChildren += 1;
         return children[nbChildren-1];
     }
-
-
 }

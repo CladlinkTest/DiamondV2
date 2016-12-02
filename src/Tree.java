@@ -78,6 +78,13 @@ class Tree
             }
     }
 
+    /**
+     * parcoursArbre
+     *     parcours... l'arbre construit précédement à partir d'un noeud donné et
+     *     mets à jour les états des feuilles:
+     *     *    (redWin, blueWin, Draw)
+     * @param n (noeud de départ du parcours)
+     */
     void parcoursArbre(Node n)
     {
         if (n.turn == 12) // if n represents the last turn of the party, stop the recursion and determine winner
@@ -97,9 +104,15 @@ class Tree
         }
     }
 
+    /**
+     * stateLeave
+     *     éval
+     *     met à jour l'état des feuilles (BLUE_WINS, RED_WINS, DRAW_PARTY)
+     * @param n
+     */
     private void stateLeave(Node n)
     {
-        board.computeScoreIA();
+        board.computeScore();
         int r = board.redScore;
         int b = board.blueScore;
         if (b == r) { n.result = Node.DRAW_PARTY; }

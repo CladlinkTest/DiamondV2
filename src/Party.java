@@ -3,10 +3,15 @@ import java.util.Calendar;
 import java.util.Random;
 
 /**
- Created by mlucile on 05/11/16.
+ * Party
+ *     Gère les tours de la partie, les appels à l'IA selon trois niveau de difficulté (easy, medium, hard)
  */
 class Party
 {
+    private static final byte EASY_MODE = 1;
+    private static final byte MEDIUM_MODE = 2;
+    private static final byte HARD_MODE = 3;
+    private byte modeJeu;
     private static Random loto = new Random(Calendar.getInstance().getTimeInMillis());
     private Board board;
     private Tree tree;
@@ -14,13 +19,19 @@ class Party
     private Node curseur = null;
 
 
-    Party()
+    Party(byte modeJeu)
     {
+        this.modeJeu = modeJeu;
         board = new Board();
         tree = new Tree(board);
         turn = 0;
     }
 
+    /**
+     * gestionTourUn
+     *     gère le tour 1 a part (car trop bordélique en une méthode)
+     * @param i ()
+     */
     void gestionTourUn(byte i)
     {
         byte coupChoisi;
@@ -37,6 +48,11 @@ class Party
         curseur = curseur.children[0]; // on déplace le curseur avec le coup de l'IA
     }
 
+    /**
+     * gestionTour
+     *     gère le déplacement du joueur et le tour de l'IA
+     * @param i (id de cellule choisis par le joueur pour son déplacement)
+     */
     void gestionTour(byte i)
     {
         byte coupChoisi;
@@ -44,11 +60,29 @@ class Party
         turn++;
         tree.setBlueChoice(i, token);
         curseur = curseur.children[findChild(i)]; // on bouge le curseur avant que l'IA choisisse son coup
-        coupChoisi = easyMode();
+        switch (modeJeu)
+        {
+            case EASY_MODE:
+                coupChoisi = easyMode();
+                break;
+            case MEDIUM_MODE:
+                coupChoisi = mediumMode();
+                break;
+            case HARD_MODE:
+                coupChoisi = hardMode();
+                break;
+            default:
+                coupChoisi = hardMode();
+        }
         tree.setIAChoice(coupChoisi, (byte)(token+6)); // joue le coup choisis de l'IA
         curseur = curseur.children[findChild(coupChoisi)]; // on bouge le curseur en fonction du coup de l'IA
     }
 
+    /**
+     * trouve le fils associé à l'id de cellule en paramètre
+     * @param coupChoisi ()
+     * @return l'indice du fils à donner au curseur
+     */
     private int findChild(int coupChoisi)
     {
         for (int i = 0; i < curseur.children.length; i++)
@@ -59,6 +93,11 @@ class Party
         return -1; // en cas de pb
     }
 
+    /**
+     * tourUn
+     *     Choisis un coup possible parmi les possibles
+     * @return le coup à jouer
+     */
     private byte tourUn()
     {
         ArrayList<Byte> listeCaseVide = new ArrayList<>();
@@ -70,6 +109,12 @@ class Party
         return listeCaseVide.get(loto.nextInt(listeCaseVide.size()));
     }
 
+    /**
+     * easyMode
+     *     parcours l'arbre, compte le nombre de victoire de l'IA, du joueur, de draws et
+     *     choisis le coup qui avantage le plus le joueur
+     * @return le coup à jouer
+     */
     private byte easyMode()
     {
         double red, blue, draw, total;
@@ -84,7 +129,7 @@ class Party
             blue = tree.computeBlueVictories(curseur.children[i]);
             draw = tree.computeDraws(curseur.children[i]);
             total = red + blue + draw;
-            System.out.println(blue/total);
+            System.out.println("EASY " + blue/total);
 
             // on prend le coup qui avantage le plus les bleus
             if (pourcentageVictoire <= blue / total)
@@ -97,11 +142,16 @@ class Party
         return coupAJouer;
     }
 
-    private int mediumMode()
+    /**
+     * mediumMode
+     *     prend le coup qui permet de laisser une chance sur deux entre victoire et défaite
+     * @return le coup à jouer
+     */
+    private byte mediumMode()
     {
         double red, blue, draw, total;
         byte coupAJouer = 50;
-        double pourcentageVictoire = 0;
+        double pourcentageVictoire = 0.5;
 
         // on regarde quel est le "pire" coup à jouer et on le joue
         for (byte i = 0; i < curseur.children.length; i++)
@@ -111,8 +161,7 @@ class Party
             blue = tree.computeBlueVictories(curseur.children[i]);
             draw = tree.computeDraws(curseur.children[i]);
             total = red + blue + draw;
-            System.out.println(blue/total);
-
+            System.out.println("MEDIUM " + blue/total);
             // on essaie de laisser une chance sur 2 de victoire
             if (Math.abs(pourcentageVictoire)-0.5 <= Math.abs((blue / total)-0.5) )
             {
@@ -125,10 +174,11 @@ class Party
     }
 
     /**
-     *
-     * @return
+     * hardMode
+     *     évalue le coup qui désaventage le plus le joueur bleu
+     * @return le coup à jouer
      */
-    private int hardMode()
+    private byte hardMode()
     {
         double red, blue, draw, total;
         byte coupAJouer = 50;
@@ -140,16 +190,16 @@ class Party
             blue = tree.computeBlueVictories(curseur.children[i]);
             draw = tree.computeDraws(curseur.children[i]);
             total = red + blue + draw;
-            System.out.println(blue/total);
+            System.out.println("HM " + red/total);
 
             // on prend le coup qui désavantage le plus les bleus
-            if (pourcentageVictoire >= blue / total)
+            if (pourcentageVictoire <= red / total)
             {
                 coupAJouer = curseur.children[i].idCell;
-                pourcentageVictoire = blue / total;
+                pourcentageVictoire = red / total;
             }
         }
-        System.out.println("---------------------------");
+        System.out.println("--------------------------");
         return coupAJouer;
     }
 

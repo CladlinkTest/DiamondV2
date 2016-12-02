@@ -133,32 +133,10 @@ public class Board
         blueScore = 0;
         redScore = 0;
         int idVoid = voidCellIndex();
-        System.out.println("voidCellIndex : " + idVoid);
-        for(int i=0; i<6; i++)
-            if (neighbors[idVoid][i] != NO_NEIGHBOR)
-            {
-                if (board[neighbors[idVoid][i]] < 6)
-                {
-                    System.out.println("bleu : " + (board[neighbors[idVoid][i]]));
-                    blueScore += board[neighbors[idVoid][i]];
-                }
-                else
-                {
-                    System.out.println("rouge : " + (board[neighbors[idVoid][i]]-6));
-                    redScore += (board[neighbors[idVoid][i]]-6);
-                }
-            }
-    }
-
-    void computeScoreIA()
-    {
-        blueScore = 0;
-        redScore = 0;
-        int idVoid = voidCellIndex();
         for(int i=0;i<6;i++)
             if (neighbors[idVoid][i] != NO_NEIGHBOR)
             {
-                if (board[neighbors[idVoid][i]] <= 6)
+                if (board[neighbors[idVoid][i]] < 6)
                     blueScore += board[neighbors[idVoid][i]];
                 else
                     redScore += (board[neighbors[idVoid][i]]-6);
