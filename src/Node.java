@@ -34,6 +34,7 @@
           - 1 : blue wins
           - 2 : red wins
      */
+
 class Node
 {
     static byte NO_RESULT = -1;

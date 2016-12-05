@@ -6,6 +6,7 @@ import java.util.Random;
  * Party
  *     Gère les tours de la partie, les appels à l'IA selon trois niveau de difficulté (easy, medium, hard)
  */
+
 class Party
 {
     static final byte EASY_MODE = 1;

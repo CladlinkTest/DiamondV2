@@ -6,6 +6,7 @@ import java.awt.event.MouseListener;
 /**
  Created by cladlink on 05/11/16.
  */
+
 class VueBoard extends JFrame
 {
     private Party party;

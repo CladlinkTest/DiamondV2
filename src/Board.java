@@ -1,6 +1,7 @@
 /**
  * Created by mlucile on 05/11/16.
  */
+
 public class Board
 {
     static byte VOID_CELL = -1;
